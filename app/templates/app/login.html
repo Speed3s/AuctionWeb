@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+  {% block content %}
+    <br>
+    <br>
+    <br>
+    <form role="form" action="{% url 'login' %}" method="POST">
+      {% csrf_token %}
+      <h1 style="text-shadow: 1px 1px 30px #44804d; padding: 10px;"> Please Sign In </h1>
+      <br><br>
+          {{form|linebreaks}}
+        <button type="submit" class="btn btn-success"> Sign In </button>
+        <small class="text-muted ml-4">
+            <a href="{% url 'password_reset' %}"> Forgot Your Password? </a>
+        </small>  
+    </form>
+{% endblock %}

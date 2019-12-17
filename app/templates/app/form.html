@@ -1,0 +1,116 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <div>
+      <!-- STYLE DEFINED TO MAKE TABLES RESPONSIVE -->
+    <style>
+        @media all and (max-width:768px){
+            table,tr, td, tbody, td p table div, table table{
+                width:100%!important;
+                float:left;
+                clear:both;
+                display:block;
+                text-align:center;
+            }
+        }
+    </style>
+    <script>
+      $(function(){
+        $("#fetch-btn").ready(function(){
+          $.ajax({
+            url : "{% url 'getItems_view' %}",
+            success : function (data){
+              $.each(data.items, function(i, Item){
+                $("#itemList").append("<tr> <td> <img src='/media/"+ Item.itemImage +"' alt='Picture is not found' height='100'></img> </td> <td>"+ Item.itemName +"</td> <td>"+ Item.itemAdded +
+                  "</td> <td>"+ Item.itemAuctonEnd +"</td> <td>£"+ Item.itemPrice +"</td> <td>"+Item.highestBidder+"</td>  <td>  {% if user.is_authenticated %} <a href='/biddingview/"+this.id+"/'>{% else %} <a onclick='signinMessage()'>  {% endif %} <button class="+"btn btn-outline-success"+"id="+Item.id +">Bid </button></a> </td>  </tr>")
+              })
+              $.each(data.itemClosed, function(i, Item){
+                $("#auctionEndList").append("<tr> <td> <img src='/media/"+ Item.itemImage +"' alt='Picture is not found' height='100'></img> </td> <td>"+ Item.itemName +"</td> <td>"+ Item.itemAdded +
+                  "</td> <td>"+ Item.itemAuctonEnd +"</td> <td>£"+ Item.itemPrice +"</td> <td>"+Item.bidderList.split(',').join('<br/>')+"</td> <td>"+Item.highestBidder+"</td> </tr>")
+              })
+
+            }
+          })
+        })
+      })
+    </script>
+
+
+    <script >
+      $(document).ready(function(){
+        $("#SearchInput").on("keyup", function() {
+          SearchItem($(this).val().toLowerCase())
+        });
+      });
+      function SearchItem(e){
+          $.ajax({
+            url: "{% url 'getItems_view' %}",
+            success: function (data) {
+              $.each(data.items, function(i, Item){
+                  if(Item.itemName == e)
+                  {
+                    
+                      $("#itemList tr").filter(function(){
+                        $(this).toggle($(this).text().toLowerCase().indexOf(e) >-1)
+                      })
+                  }
+                  else
+                  {
+                    $("#itemList tr").filter(function(){
+                      $(this).toggle($(this).text().toLowerCase().indexOf(e) >-1)
+                    })
+                  }
+                
+              })
+            }
+          })
+      }
+      function signinMessage() {
+        alert("Log in or Signup");
+      }
+    </script>
+      <br><br>
+      <h1 style="text-shadow: 1px 1px 30px #44804d; padding: 10px;"> {{title}} </h1>
+      <br>
+        <!-- HOME PAGE -->
+        {% if subtitle %}
+          <input id="SearchInput" type="text" placeholder="Search.."> <br><br><br>
+          <div id="result">
+          
+          </div>
+
+          <table class="table table-striped table-hover " border="0" style="margin: 0 auto text-align: center;"   >
+            <thead>
+              <tr>
+                {% for m in Item_header %}
+                  <th>{{m}}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+
+            <tbody id ="itemList">
+            </tbody>
+          </table>
+        {% endif %}
+        <!-- END HOME PAGE -->
+
+
+        <!-- AUCTION PAGE -->
+        {% if auc %}
+          <table class="table table-striped table-hover" border="0" style="margin: 0 auto text-align: center;" >
+            <thead>
+              <tr>
+                {% for m in Item_header %}
+                  <th>{{m}}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+
+            <tbody id="auctionEndList">
+            </tbody>
+        </table>
+      {% endif %}
+      <!-- END AUCTION PAGE -->
+
+    </div>
+{% endblock content %}

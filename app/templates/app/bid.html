@@ -1,0 +1,88 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <div>
+        <!-- BID PAGE -->
+        <br>
+        <br>
+    <h1 style="text-shadow: 1px 1px 30px #44804d; padding: 10px;"> HAPPY BIDDING !</h1>
+
+    <!-- <div class="row"> -->
+      <div class="col-lg-6" style="padding-right:0px; padding-left:0px; align-items:center;">
+        <img src='/media/{{item.itemImage}}'  id="itemImage" alt='Picture is not found'></img>
+      </div>
+      <div class="col-lg-6" style="padding-right:0px; padding-left:20px; align-items:center;">
+        <br>
+        <br>
+        <table class="table table-striped table-hover">
+        <tr>
+          <td style="text-align: right;"> <strong>Submitted by :</strong></td>
+          <td style="text-align: left;">{{item.seller}}</td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;"><strong>Item :</strong></td>
+          <td style="text-align: left;">{{item}}</td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;"><strong>Description:</strong></td>
+          <td style="text-align: left;">{{item.itemDescription}}</td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;"><strong>Price: £</strong></td>
+          <td style="text-align: left;">{{item.itemPrice}}</td>
+        </tr>
+
+        <tr>
+          <td style="text-align: right;"><strong>Added:</strong></td>
+          <td style="text-align: left;">{{item.itemAdded}}</td>
+        </tr>
+
+        <tr>
+        <td style="text-align: right;"><strong>Ends :</strong></td>
+        <td style="text-align: left;">{{item.itemAuctonEnd}}</td>
+        </tr>
+
+        <tr>
+        <td style="text-align: right;"><strong>Current Highest Bidder:</strong></td>
+        <td style="text-align: left;">{{item.highestBidder}}</td>
+        </tr>
+
+      </table></div>
+
+
+
+       <form role = "form" name="form1" action ="/biddingview/{{bid_id}}/" method ="POST" onsubmit="required()">
+         {% csrf_token %}
+         <b>Bid on this Item :</b>
+         <input type="number" step="any" name="updatePrice" oninput="check(this)" />
+          <input type="submit" id="updateValueButton" class="btn btn-success" value="Submit bid"/>
+         <input type="hidden" name="updateUsername" value="{{user}}" readonly/> <br>
+
+        </form>
+
+          <!-- End BID PAGE -->
+    </div>
+
+    <script>
+    function required(){
+      var empt = document.form1.updatePrice.value;
+      if (empt === ""){
+        alert("Please input a Value");
+        return false;
+      }
+    }
+
+    function check(input) {
+      if (input.value <= {{item.itemPrice}}) {
+        input.setCustomValidity('The number must be higher than current price');
+      } else {
+        input.setCustomValidity('');
+      }
+    }
+    </script>
+{% endblock content %}

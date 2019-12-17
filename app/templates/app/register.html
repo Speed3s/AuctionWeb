@@ -1,0 +1,93 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+      $(function(){
+        $("#btn").click(function(){
+          var val = $("#btn").val();
+          console.log(val)
+          if(val == "Search"){
+              //show a list of items as a table
+          }
+        })
+      })
+    </script>
+    <style>
+      <!-- .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+      }
+      .form-signin .checkbox {
+        font-weight: 400;
+      }
+      .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+      }
+      .form-signin .form-control:focus {
+        z-index: 2;
+      }
+      .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      } -->
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Signin Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+
+        <!-- Login PAGE -->
+
+        <!-- <form method='POST' action='' enctype='multipart/form-data'>
+          {% csrf_token %}
+          {{ form.as_p |linebreaks}}
+          {{member.as_p}}
+          <input type="submit" class="btn btn-default" id="btn" value="{{title}}" />
+
+class="h3 mb-3 font-weight-normal"
+
+
+        </form> -->
+        <form method='POST' action="" class="form-signin" width="200px">
+          <br><br>
+            <h1 style="text-shadow: 1px 1px 30px #44804d; padding: 10px;">{{subtitle}}</h1><br><br>
+            {% csrf_token %}
+            <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <div class="checkbox mb-3">
+
+            </div> -->
+            {{member|crispy}}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+          </form>
+          <!-- End Login PAGE -->
+    </div>
+{% endblock content %}

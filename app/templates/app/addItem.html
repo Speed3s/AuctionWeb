@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+        <br>
+        <br>
+        <h1 style="text-shadow: 1px 1px 30px #44804d; padding: 10px;">Add Item</h1>
+        <br>
+        <br>
+        <div class="row align-items-center" style="margin-right: 17%; margin-left: 17%;">
+          <form id = "NewItem"  action="{% url 'addItem' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{form|crispy}} <br /><br>
+          <button type="submit" class="btn btn-success"> Add Item for bidding </button>
+        </form>
+        </div>
+
+{% endblock content %}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>Welcome</title>
+<style>
+  .container{
+    text-align: center;
+    font-family: ubuntu;
+    letter-spacing: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  #buttons{
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+    font-family: ubuntu;
+    font-weight: bold;
+     color: #0000;
+    text-align: center;
+  }
+  .col{
+    padding: 10px;
+
+  }
+  .col-lg-6 #itemImage{
+      width:100% ;
+  }
+
+  h1{
+    font-size: 200px;
+
+  }
+  .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+      color: #000; /*Sets the text hover color on navbar*/
+  }
+  .navbar-default .navbar-nav > li > a, .navbar-default .navbar-nav > li > a {
+      color: #000; /*Sets the text hover color on navbar*/
+  }
+
+
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="{% static 'javascript/jquery-3.4.1.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#9fdf9f; list-style: none; text-align: center;" >
+  <div class="container" id="navigationBar">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active" id="buttons"><a href="/"><span class="glyphicon glyphicon-home"></span>  Home   </a></li>
+        <li id="buttons"><a href="/auction"><span class="	glyphicon glyphicon-lock"></span> Closed Auctions    </a></li>
+
+        {% if user.is_authenticated %}
+            <li id="buttons"><a href="{% url 'addItem' %}"><span class="	glyphicon glyphicon-upload"></span>  Add Item   </a></li>
+
+      </ul>
+        {% else %}
+        <ul class="nav navbar-nav navbar-right">
+            <li id="buttons"><a href="/register/"><span class="glyphicon glyphicon-plus-sign"></span>  Sign up  </a></li>
+            <li id="buttons"><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>  Login  </a></li>
+            </ul>
+
+        {% endif %}
+
+        <ul class="nav navbar-nav navbar-right">
+
+        {% if user.is_authenticated %}
+
+            <li id="buttons"><a href="/profile/{{user.id}}"><span class="glyphicon glyphicon-user"></span> {{user}}   </a></li>
+            <li id="buttons"><a> Welcome back, {{user.first_name}} !</a></li>
+            <li id="buttons"><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span>  Log Out  </a></li>
+        {% else %}
+            <li><a></a></li>
+        {% endif %}
+        </ul>
+      
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+<br/><br/>
+
+<div class="container" class="col-lg-6">
+
+  {% block content %}
+  {% endblock %}
+
+</div><!-- /.container -->
+
+
+</body>
+</html>
